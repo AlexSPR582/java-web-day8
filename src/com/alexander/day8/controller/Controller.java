@@ -7,8 +7,7 @@ import com.alexander.day8.exception.CommandException;
 import java.util.Map;
 
 public class Controller {
-    public Map<String, Object> processRequest(String commandType,
-                                              Map<String, String> requestParameters)
+    public Map<String, Object> processRequest(String commandType, Map<String, String> requestParameters)
             throws CommandException {
         ActionProvider provider = new ActionProvider();
         ActionCommand command = provider.defineCommand(commandType);

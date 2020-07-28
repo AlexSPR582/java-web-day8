@@ -64,7 +64,7 @@ public class BookService {
                 throw new ServiceException("Invalid request parameters");
             }
         } catch (DaoException e) {
-            throw new ServiceException();
+            throw new ServiceException(e);
         }
         return response;
     }
@@ -82,7 +82,7 @@ public class BookService {
                 throw new ServiceException("Invalid request parameters");
             }
         } catch (DaoException e) {
-            throw new ServiceException();
+            throw new ServiceException(e);
         }
         return response;
     }
@@ -101,7 +101,7 @@ public class BookService {
                 throw new ServiceException("Invalid request parameters");
             }
         } catch (DaoException e) {
-            throw new ServiceException();
+            throw new ServiceException(e);
         }
         return response;
     }
@@ -120,7 +120,7 @@ public class BookService {
                 throw new ServiceException("Invalid request parameters");
             }
         } catch (DaoException e) {
-            throw new ServiceException();
+            throw new ServiceException(e);
         }
         return response;
     }
@@ -138,7 +138,7 @@ public class BookService {
                 throw new ServiceException("Invalid request parameters");
             }
         } catch (DaoException e) {
-            throw new ServiceException();
+            throw new ServiceException(e);
         }
         return response;
     }

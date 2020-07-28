@@ -5,7 +5,7 @@ import static org.testng.Assert.assertTrue;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.fail;
 
-import com.alexander.day8.creator.ConnectionCreator;
+import com.alexander.day8.model.ConnectionCreator;
 import com.alexander.day8.entity.Book;
 import com.alexander.day8.exception.DaoException;
 import com.alexander.day8.model.impl.BookListDaoImpl;
@@ -42,12 +42,12 @@ public class BookListDaoTest {
     @Test
     public void addBookPositiveTest() {
         boolean actualResult = false;
-        ConnectionCreator creator = new ConnectionCreator();
-        try (Connection cn = creator.create()) {
+        ConnectionCreator creator = ConnectionCreator.getInstance();
+        try (Connection cn = creator.createConnection()) {
             actualResult = dao.addBook("451 градус по Фаренгейту", 256, 1953, "Рэй Брэдбери");
             cn.createStatement().execute(REMOVE);
         } catch (DaoException | SQLException e) {
-            fail("Exception occurred");
+            fail("Exception occurred", e);
         }
         assertTrue(actualResult, "fail test");
     }
@@ -60,8 +60,8 @@ public class BookListDaoTest {
     @Test
     public void removeBookPositiveTest() {
         boolean actualResult = false;
-        ConnectionCreator creator = new ConnectionCreator();
-        try (Connection cn = creator.create()) {
+        ConnectionCreator creator = ConnectionCreator.getInstance();
+        try (Connection cn = creator.createConnection()) {
             Statement statement = cn.createStatement();
             statement.execute(ADD);
             ResultSet rs = statement.executeQuery(SELECT_ID);
@@ -70,7 +70,7 @@ public class BookListDaoTest {
                 actualResult = dao.removeBook(id);
             }
         } catch (DaoException | SQLException e) {
-            fail("Exception occurred");
+            fail("Exception occurred", e);
         }
         assertTrue(actualResult, "fail test");
     }
@@ -81,7 +81,7 @@ public class BookListDaoTest {
         try {
             actualResult = dao.removeBook(-7);
         } catch (DaoException e) {
-            fail("Exception occurred");
+            fail("Exception occurred", e);
         }
         assertFalse(actualResult, "fail test");
     }
@@ -93,7 +93,7 @@ public class BookListDaoTest {
         try {
             actual = dao.findBooksByAuthors("Джейн Остин");
         } catch (DaoException e) {
-            fail("Exception occurred");
+            fail("Exception occurred", e);
         }
         assertEquals(actual, expected, "fail test");
     }
@@ -105,7 +105,7 @@ public class BookListDaoTest {
         try {
             actual = dao.findBooksByAuthors("Стивен Кинг");
         } catch (DaoException e) {
-            fail("Exception occurred");
+            fail("Exception occurred", e);
         }
         assertEquals(actual, expected, "fail test");
     }
@@ -117,7 +117,7 @@ public class BookListDaoTest {
         try {
             actual = dao.findBooksByAuthors();
         } catch (DaoException e) {
-            fail("Exception occurred");
+            fail("Exception occurred", e);
         }
         assertEquals(actual, expected, "fail test");
     }
@@ -129,7 +129,7 @@ public class BookListDaoTest {
         try {
             actual = dao.findBooksById(3);
         } catch (DaoException e) {
-            fail("Exception occurred");
+            fail("Exception occurred", e);
         }
         assertEquals(actual, expected, "fail test");
     }
@@ -141,7 +141,7 @@ public class BookListDaoTest {
         try {
             actual = dao.findBooksById(10);
         } catch (DaoException e) {
-            fail("Exception occurred");
+            fail("Exception occurred", e);
         }
         assertEquals(actual, expected, "fail test");
     }
@@ -153,7 +153,7 @@ public class BookListDaoTest {
         try {
             actual = dao.findBooksById();
         } catch (DaoException e) {
-            fail("Exception occurred");
+            fail("Exception occurred", e);
         }
         assertEquals(actual, expected, "fail test");
     }
@@ -165,7 +165,7 @@ public class BookListDaoTest {
         try {
             actual = dao.findBooksByTitle("Гордость и предубеждение");
         } catch (DaoException e) {
-            fail("Exception occurred");
+            fail("Exception occurred", e);
         }
         assertEquals(actual, expected, "fail test");
     }
@@ -177,7 +177,7 @@ public class BookListDaoTest {
         try {
             actual = dao.findBooksByTitle("Война и мир");
         } catch (DaoException e) {
-            fail("Exception occurred");
+            fail("Exception occurred", e);
         }
         assertEquals(actual, expected, "fail test");
     }
@@ -189,7 +189,7 @@ public class BookListDaoTest {
         try {
             actual = dao.findBooksByTitle();
         } catch (DaoException e) {
-            fail("Exception occurred");
+            fail("Exception occurred", e);
         }
         assertEquals(actual, expected, "fail test");
     }
@@ -201,7 +201,7 @@ public class BookListDaoTest {
         try {
             actual = dao.findBooksByPages(416);
         } catch (DaoException e) {
-            fail("Exception occurred");
+            fail("Exception occurred", e);
         }
         assertEquals(actual, expected, "fail test");
     }
@@ -213,7 +213,7 @@ public class BookListDaoTest {
         try {
             actual = dao.findBooksByPages(1098);
         } catch (DaoException e) {
-            fail("Exception occurred");
+            fail("Exception occurred", e);
         }
         assertEquals(actual, expected, "fail test");
     }
@@ -225,7 +225,7 @@ public class BookListDaoTest {
         try {
             actual = dao.findBooksByPages();
         } catch (DaoException e) {
-            fail("Exception occurred");
+            fail("Exception occurred", e);
         }
         assertEquals(actual, expected, "fail test");
     }
@@ -237,7 +237,7 @@ public class BookListDaoTest {
         try {
             actual = dao.findBooksByPublicationYear(1847);
         } catch (DaoException e) {
-            fail("Exception occurred");
+            fail("Exception occurred", e);
         }
         assertEquals(actual, expected, "fail test");
     }
@@ -249,7 +249,7 @@ public class BookListDaoTest {
         try {
             actual = dao.findBooksByPublicationYear(1098);
         } catch (DaoException e) {
-            fail("Exception occurred");
+            fail("Exception occurred", e);
         }
         assertEquals(actual, expected, "fail test");
     }
@@ -261,7 +261,7 @@ public class BookListDaoTest {
         try {
             actual = dao.findBooksByPublicationYear();
         } catch (DaoException e) {
-            fail("Exception occurred");
+            fail("Exception occurred", e);
         }
         assertEquals(actual, expected, "fail test");
     }

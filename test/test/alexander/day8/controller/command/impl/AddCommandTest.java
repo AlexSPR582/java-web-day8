@@ -4,7 +4,7 @@ import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.fail;
 
 import com.alexander.day8.controller.command.impl.AddCommand;
-import com.alexander.day8.creator.ConnectionCreator;
+import com.alexander.day8.model.ConnectionCreator;
 import com.alexander.day8.exception.CommandException;
 import com.alexander.day8.exception.DaoException;
 import org.testng.annotations.BeforeTest;
@@ -34,12 +34,12 @@ public class AddCommandTest {
         parameters.put("authors", "Рэй Брэдбери");
         Map<String, Object> actual = null;
         Map<String, Object> expected = Map.of("response", true);
-        ConnectionCreator creator = new ConnectionCreator();
-        try (Connection cn = creator.create()) {
+        ConnectionCreator creator = ConnectionCreator.getInstance();
+        try (Connection cn = creator.createConnection()) {
             actual = command.execute(parameters);
             cn.createStatement().execute(REMOVE);
         } catch (CommandException | DaoException | SQLException e) {
-            fail("Exception occurred");
+            fail("Exception occurred", e);
         }
         assertEquals(actual, expected, "fail test");
     }

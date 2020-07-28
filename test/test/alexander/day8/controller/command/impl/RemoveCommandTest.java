@@ -4,7 +4,7 @@ import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.fail;
 
 import com.alexander.day8.controller.command.impl.RemoveCommand;
-import com.alexander.day8.creator.ConnectionCreator;
+import com.alexander.day8.model.ConnectionCreator;
 import com.alexander.day8.exception.CommandException;
 import com.alexander.day8.exception.DaoException;
 import org.testng.annotations.BeforeTest;
@@ -31,8 +31,8 @@ public class RemoveCommandTest {
     public void executePositiveTest() {
         Map<String, Object> actual = null;
         Map<String, Object> expected = Map.of("response", true);
-        ConnectionCreator creator = new ConnectionCreator();
-        try (Connection cn = creator.create()) {
+        ConnectionCreator creator = ConnectionCreator.getInstance();
+        try (Connection cn = creator.createConnection()) {
             Statement statement = cn.createStatement();
             statement.execute(ADD);
             ResultSet rs = statement.executeQuery(SELECT_ID);
@@ -42,7 +42,7 @@ public class RemoveCommandTest {
                 actual = command.execute(parameters);
             }
         } catch (CommandException | DaoException | SQLException e) {
-            fail("Exception occurred");
+            fail("Exception occurred", e);
         }
         assertEquals(actual, expected, "fail test");
     }
@@ -55,7 +55,7 @@ public class RemoveCommandTest {
             Map<String, String> parameters = Map.of("id", "502");
             actual = command.execute(parameters);
         } catch (CommandException e) {
-            fail("Exception occurred");
+            fail("Exception occurred", e);
         }
         assertEquals(actual, expected, "fail test");
     }

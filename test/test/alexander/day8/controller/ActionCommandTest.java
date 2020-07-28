@@ -23,7 +23,7 @@ public class ActionCommandTest {
         try {
             command = provider.defineCommand("ADD");
         } catch (CommandException e) {
-            fail("Exception occurred");
+            fail("Exception occurred", e);
         }
         assertNotNull(command, "fail test");
     }
@@ -34,7 +34,7 @@ public class ActionCommandTest {
         try {
             command = provider.defineCommand("REMOVE");
         } catch (CommandException e) {
-            fail("Exception occurred");
+            fail("Exception occurred", e);
         }
         assertNotNull(command, "fail test");
     }
@@ -45,7 +45,7 @@ public class ActionCommandTest {
         try {
             command = provider.defineCommand("FIND_ID");
         } catch (CommandException e) {
-            fail("Exception occurred");
+            fail("Exception occurred", e);
         }
         assertNotNull(command, "fail test");
     }
@@ -56,7 +56,7 @@ public class ActionCommandTest {
         try {
             command = provider.defineCommand("FIND_TITLE");
         } catch (CommandException e) {
-            fail("Exception occurred");
+            fail("Exception occurred", e);
         }
         assertNotNull(command, "fail test");
     }
@@ -67,7 +67,7 @@ public class ActionCommandTest {
         try {
             command = provider.defineCommand("FIND_PAGES");
         } catch (CommandException e) {
-            fail("Exception occurred");
+            fail("Exception occurred", e);
         }
         assertNotNull(command, "fail test");
     }
@@ -78,7 +78,7 @@ public class ActionCommandTest {
         try {
             command = provider.defineCommand("FIND_PUBLICATION_YEAR");
         } catch (CommandException e) {
-            fail("Exception occurred");
+            fail("Exception occurred", e);
         }
         assertNotNull(command, "fail test");
     }
@@ -89,7 +89,7 @@ public class ActionCommandTest {
         try {
             command = provider.defineCommand("FIND_AUTHOR");
         } catch (CommandException e) {
-            fail("Exception occurred");
+            fail("Exception occurred", e);
         }
         assertNotNull(command, "fail test");
     }

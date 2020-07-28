@@ -11,7 +11,7 @@ public class ActionProvider {
         try {
             commandType = CommandType.valueOf(command).getCommand();
         } catch (IllegalArgumentException e) {
-            throw new CommandException("No such command");
+            throw new CommandException("No such command", e);
         }
         return commandType;
     }

@@ -3,7 +3,7 @@ package test.alexander.day8.service;
 import static org.testng.Assert.fail;
 import static org.testng.Assert.assertEquals;
 
-import com.alexander.day8.creator.ConnectionCreator;
+import com.alexander.day8.model.ConnectionCreator;
 import com.alexander.day8.entity.Book;
 import com.alexander.day8.exception.DaoException;
 import com.alexander.day8.exception.ServiceException;
@@ -43,13 +43,13 @@ public class BookServiceTest {
     public void addBookPositiveTest() {
         Map<String, Object> actual = null;
         Map<String, Object> expected = Map.of("response", true);
-        ConnectionCreator creator = new ConnectionCreator();
-        try (Connection cn = creator.create()) {
+        ConnectionCreator creator = ConnectionCreator.getInstance();
+        try (Connection cn = creator.createConnection()) {
             actual = bookService.addBook("451 градус по Фаренгейту", "256",
                     "1953", "Рэй Брэдбери");
             cn.createStatement().execute(REMOVE);
         } catch (ServiceException | DaoException | SQLException e) {
-            fail("Exception occurred");
+            fail("Exception occurred", e);
         }
         assertEquals(actual, expected, "fail test");
     }
@@ -64,8 +64,8 @@ public class BookServiceTest {
     public void removeBookPositiveTest() {
         Map<String, Object> actual = null;
         Map<String, Object> expected = Map.of("response", true);
-        ConnectionCreator creator = new ConnectionCreator();
-        try (Connection cn = creator.create()) {
+        ConnectionCreator creator = ConnectionCreator.getInstance();
+        try (Connection cn = creator.createConnection()) {
             Statement statement = cn.createStatement();
             statement.execute(ADD);
             ResultSet rs = statement.executeQuery(SELECT_ID);
@@ -74,7 +74,7 @@ public class BookServiceTest {
                 actual = bookService.removeBook(String.valueOf(id));
             }
         } catch (ServiceException | DaoException | SQLException e) {
-            fail("Exception occurred");
+            fail("Exception occurred", e);
         }
         assertEquals(actual, expected, "fail test");
     }
@@ -86,7 +86,7 @@ public class BookServiceTest {
         try {
             actual = bookService.removeBook("502");
         } catch (ServiceException e) {
-            fail("Exception occurred");
+            fail("Exception occurred", e);
         }
         assertEquals(actual, expected, "fail test");
     }
@@ -104,7 +104,7 @@ public class BookServiceTest {
         try {
             actual = bookService.findBooksByAuthors("Джейн Остин");
         } catch (ServiceException e) {
-            fail("Exception occurred");
+            fail("Exception occurred", e);
         }
         assertEquals(actual, expected, "fail test");
     }
@@ -116,7 +116,7 @@ public class BookServiceTest {
         try {
             actual = bookService.findBooksByAuthors("Стивен Кинг");
         } catch (ServiceException e) {
-            fail("Exception occurred");
+            fail("Exception occurred", e);
         }
         assertEquals(actual, expected, "fail test");
     }
@@ -128,7 +128,7 @@ public class BookServiceTest {
         try {
             actual = bookService.findBooksByAuthors("");
         } catch (ServiceException e) {
-            fail("Exception occurred");
+            fail("Exception occurred", e);
         }
         assertEquals(actual, expected, "fail test");
     }
@@ -140,7 +140,7 @@ public class BookServiceTest {
         try {
             actual = bookService.findBooksById("3");
         } catch (ServiceException e) {
-            fail("Exception occurred");
+            fail("Exception occurred", e);
         }
         assertEquals(actual, expected, "fail test");
     }
@@ -152,7 +152,7 @@ public class BookServiceTest {
         try {
             actual = bookService.findBooksById("10");
         } catch (ServiceException e) {
-            fail("Exception occurred");
+            fail("Exception occurred", e);
         }
         assertEquals(actual, expected, "fail test");
     }
@@ -164,7 +164,7 @@ public class BookServiceTest {
         try {
             actual = bookService.findBooksById("");
         } catch (ServiceException e) {
-            fail("Exception occurred");
+            fail("Exception occurred", e);
         }
         assertEquals(actual, expected, "fail test");
     }
@@ -176,7 +176,7 @@ public class BookServiceTest {
         try {
             actual = bookService.findBooksByTitle("Гордость и предубеждение");
         } catch (ServiceException e) {
-            fail("Exception occurred");
+            fail("Exception occurred", e);
         }
         assertEquals(actual, expected, "fail test");
     }
@@ -188,7 +188,7 @@ public class BookServiceTest {
         try {
             actual = bookService.findBooksByTitle("Война и мир");
         } catch (ServiceException e) {
-            fail("Exception occurred");
+            fail("Exception occurred", e);
         }
         assertEquals(actual, expected, "fail test");
     }
@@ -200,7 +200,7 @@ public class BookServiceTest {
         try {
             actual = bookService.findBooksByTitle("");
         } catch (ServiceException e) {
-            fail("Exception occurred");
+            fail("Exception occurred", e);
         }
         assertEquals(actual, expected, "fail test");
     }
@@ -212,7 +212,7 @@ public class BookServiceTest {
         try {
             actual = bookService.findBooksByPages("416");
         } catch (ServiceException e) {
-            fail("Exception occurred");
+            fail("Exception occurred", e);
         }
         assertEquals(actual, expected, "fail test");
     }
@@ -224,7 +224,7 @@ public class BookServiceTest {
         try {
             actual = bookService.findBooksByPages("1098");
         } catch (ServiceException e) {
-            fail("Exception occurred");
+            fail("Exception occurred", e);
         }
         assertEquals(actual, expected, "fail test");
     }
@@ -236,7 +236,7 @@ public class BookServiceTest {
         try {
             actual = bookService.findBooksByPages("");
         } catch (ServiceException e) {
-            fail("Exception occurred");
+            fail("Exception occurred", e);
         }
         assertEquals(actual, expected, "fail test");
     }
@@ -248,7 +248,7 @@ public class BookServiceTest {
         try {
             actual = bookService.findBooksByPublicationYear("1847");
         } catch (ServiceException e) {
-            fail("Exception occurred");
+            fail("Exception occurred", e);
         }
         assertEquals(actual, expected, "fail test");
     }
@@ -260,7 +260,7 @@ public class BookServiceTest {
         try {
             actual = bookService.findBooksByPublicationYear("1098");
         } catch (ServiceException e) {
-            fail("Exception occurred");
+            fail("Exception occurred", e);
         }
         assertEquals(actual, expected, "fail test");
     }
@@ -272,7 +272,7 @@ public class BookServiceTest {
         try {
             actual = bookService.findBooksByPublicationYear("");
         } catch (ServiceException e) {
-            fail("Exception occurred");
+            fail("Exception occurred", e);
         }
         assertEquals(actual, expected, "fail test");
     }

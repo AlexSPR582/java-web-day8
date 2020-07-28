@@ -37,7 +37,7 @@ public class FindTitleCommandTest {
         try {
             actual = command.execute(parameters);
         } catch (CommandException e) {
-            fail("Exception occurred");
+            fail("Exception occurred", e);
         }
         assertEquals(actual, expected, "fail test");
     }
@@ -50,7 +50,7 @@ public class FindTitleCommandTest {
         try {
             actual = command.execute(parameters);
         } catch (CommandException e) {
-            fail("Exception occurred");
+            fail("Exception occurred", e);
         }
         assertEquals(actual, expected, "fail test");
     }
@@ -63,7 +63,7 @@ public class FindTitleCommandTest {
         try {
             actual = command.execute(parameters);
         } catch (CommandException e) {
-            fail("Exception occurred");
+            fail("Exception occurred", e);
         }
         assertEquals(actual, expected, "fail test");
     }

@@ -5,7 +5,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import com.alexander.day8.creator.ConnectionCreator;
+import com.alexander.day8.model.ConnectionCreator;
 import com.alexander.day8.entity.Book;
 import com.alexander.day8.exception.DaoException;
 import com.alexander.day8.model.BookListDao;
@@ -32,8 +32,8 @@ public class BookListDaoImpl implements BookListDao {
     public boolean addBook(String title, int pages, int publicationYear, String authors)
             throws DaoException {
         boolean isAdded;
-        ConnectionCreator creator = new ConnectionCreator();
-        try (Connection cn = creator.create()) {
+        ConnectionCreator creator = ConnectionCreator.getInstance();
+        try (Connection cn = creator.createConnection()) {
             PreparedStatement addStatement = cn.prepareStatement(ADD_BOOK);
             addStatement.setString(1, title);
             addStatement.setInt(2, pages);
@@ -49,8 +49,8 @@ public class BookListDaoImpl implements BookListDao {
     @Override
     public boolean removeBook(int id) throws DaoException {
         boolean isRemoved;
-        ConnectionCreator creator = new ConnectionCreator();
-        try (Connection cn = creator.create()) {
+        ConnectionCreator creator = ConnectionCreator.getInstance();
+        try (Connection cn = creator.createConnection()) {
             PreparedStatement removeStatement = cn.prepareStatement(REMOVE_BOOK);
             removeStatement.setInt(1, id);
             isRemoved = removeStatement.executeUpdate() == 1;
@@ -63,8 +63,8 @@ public class BookListDaoImpl implements BookListDao {
     @Override
     public List<Book> findBooksById(int... id) throws DaoException {
         List<Book> foundBooks = new ArrayList<>();
-        ConnectionCreator creator = new ConnectionCreator();
-        try (Connection cn = creator.create()) {
+        ConnectionCreator creator = ConnectionCreator.getInstance();
+        try (Connection cn = creator.createConnection()) {
             PreparedStatement findStatement;
             if (id.length == 1) {
                 findStatement = cn.prepareStatement(FIND_BY_ID);
@@ -91,8 +91,8 @@ public class BookListDaoImpl implements BookListDao {
     @Override
     public List<Book> findBooksByTitle(String... title) throws DaoException {
         List<Book> foundBooks = new ArrayList<>();
-        ConnectionCreator creator = new ConnectionCreator();
-        try (Connection cn = creator.create()) {
+        ConnectionCreator creator = ConnectionCreator.getInstance();
+        try (Connection cn = creator.createConnection()) {
             PreparedStatement findStatement;
             if (title.length == 1) {
                 findStatement = cn.prepareStatement(FIND_BY_TITLE);
@@ -119,8 +119,8 @@ public class BookListDaoImpl implements BookListDao {
     @Override
     public List<Book> findBooksByPages(int... bookPages) throws DaoException {
         List<Book> foundBooks = new ArrayList<>();
-        ConnectionCreator creator = new ConnectionCreator();
-        try (Connection cn = creator.create()) {
+        ConnectionCreator creator = ConnectionCreator.getInstance();
+        try (Connection cn = creator.createConnection()) {
             PreparedStatement findStatement;
             if (bookPages.length == 1) {
                 findStatement = cn.prepareStatement(FIND_BY_PAGES);
@@ -147,8 +147,8 @@ public class BookListDaoImpl implements BookListDao {
     @Override
     public List<Book> findBooksByPublicationYear(int... year) throws DaoException {
         List<Book> foundBooks = new ArrayList<>();
-        ConnectionCreator creator = new ConnectionCreator();
-        try (Connection cn = creator.create()) {
+        ConnectionCreator creator = ConnectionCreator.getInstance();
+        try (Connection cn = creator.createConnection()) {
             PreparedStatement findStatement;
             if (year.length == 1) {
                 findStatement = cn.prepareStatement(FIND_BY_PUBLICATION_YEAR);
@@ -175,8 +175,8 @@ public class BookListDaoImpl implements BookListDao {
     @Override
     public List<Book> findBooksByAuthors(String... authors) throws DaoException {
         List<Book> foundBooks = new ArrayList<>();
-        ConnectionCreator creator = new ConnectionCreator();
-        try (Connection cn = creator.create()) {
+        ConnectionCreator creator = ConnectionCreator.getInstance();
+        try (Connection cn = creator.createConnection()) {
             PreparedStatement findStatement;
             if (authors.length == 1) {
                 findStatement = cn.prepareStatement(FIND_BY_AUTHORS);

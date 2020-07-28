@@ -4,7 +4,7 @@ import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.fail;
 
 import com.alexander.day8.controller.Controller;
-import com.alexander.day8.creator.ConnectionCreator;
+import com.alexander.day8.model.ConnectionCreator;
 import com.alexander.day8.entity.Book;
 import com.alexander.day8.exception.CommandException;
 import com.alexander.day8.exception.DaoException;
@@ -49,12 +49,12 @@ public class ControllerTest {
         parameters.put("authors", "Рэй Брэдбери");
         Map<String, Object> actual = null;
         Map<String, Object> expected = Map.of("response", true);
-        ConnectionCreator creator = new ConnectionCreator();
-        try (Connection cn = creator.create()) {
+        ConnectionCreator creator = ConnectionCreator.getInstance();
+        try (Connection cn = creator.createConnection()) {
             actual = controller.processRequest("ADD", parameters);
             cn.createStatement().execute(REMOVE);
         } catch (CommandException | DaoException | SQLException e) {
-            fail("Exception occurred");
+            fail("Exception occurred", e);
         }
         assertEquals(actual, expected, "fail test");
     }
@@ -63,8 +63,8 @@ public class ControllerTest {
     public void processRemoveBookPositiveTest() {
         Map<String, Object> actual = null;
         Map<String, Object> expected = Map.of("response", true);
-        ConnectionCreator creator = new ConnectionCreator();
-        try (Connection cn = creator.create()) {
+        ConnectionCreator creator = ConnectionCreator.getInstance();
+        try (Connection cn = creator.createConnection()) {
             Statement statement = cn.createStatement();
             statement.execute(ADD);
             ResultSet rs = statement.executeQuery(SELECT_ID);
@@ -74,7 +74,7 @@ public class ControllerTest {
                 actual = controller.processRequest("REMOVE", parameters);
             }
         } catch (CommandException | DaoException | SQLException e) {
-            fail("Exception occurred");
+            fail("Exception occurred", e);
         }
         assertEquals(actual, expected, "fail test");
     }
@@ -87,7 +87,7 @@ public class ControllerTest {
             Map<String, String> parameters = Map.of("id", "502");
             actual = controller.processRequest("REMOVE", parameters);
         } catch (CommandException e) {
-            fail("Exception occurred");
+            fail("Exception occurred", e);
         }
         assertEquals(actual, expected, "fail test");
     }
@@ -100,7 +100,7 @@ public class ControllerTest {
         try {
             actual = controller.processRequest("FIND_AUTHOR", parameters);
         } catch (CommandException e) {
-            fail("Exception occurred");
+            fail("Exception occurred", e);
         }
         assertEquals(actual, expected, "fail test");
     }
@@ -113,7 +113,7 @@ public class ControllerTest {
         try {
             actual = controller.processRequest("FIND_AUTHOR", parameters);
         } catch (CommandException e) {
-            fail("Exception occurred");
+            fail("Exception occurred", e);
         }
         assertEquals(actual, expected, "fail test");
     }
@@ -126,7 +126,7 @@ public class ControllerTest {
         try {
             actual = controller.processRequest("FIND_AUTHOR", parameters);
         } catch (CommandException e) {
-            fail("Exception occurred");
+            fail("Exception occurred", e);
         }
         assertEquals(actual, expected, "fail test");
     }
@@ -139,7 +139,7 @@ public class ControllerTest {
         try {
             actual = controller.processRequest("FIND_ID", parameters);
         } catch (CommandException e) {
-            fail("Exception occurred");
+            fail("Exception occurred", e);
         }
         assertEquals(actual, expected, "fail test");
     }
@@ -152,7 +152,7 @@ public class ControllerTest {
         try {
             actual = controller.processRequest("FIND_ID", parameters);
         } catch (CommandException e) {
-            fail("Exception occurred");
+            fail("Exception occurred", e);
         }
         assertEquals(actual, expected, "fail test");
     }
@@ -165,7 +165,7 @@ public class ControllerTest {
         try {
             actual = controller.processRequest("FIND_ID", parameters);
         } catch (CommandException e) {
-            fail("Exception occurred");
+            fail("Exception occurred", e);
         }
         assertEquals(actual, expected, "fail test");
     }
@@ -178,7 +178,7 @@ public class ControllerTest {
         try {
             actual = controller.processRequest("FIND_PAGES", parameters);
         } catch (CommandException e) {
-            fail("Exception occurred");
+            fail("Exception occurred", e);
         }
         assertEquals(actual, expected, "fail test");
     }
@@ -191,7 +191,7 @@ public class ControllerTest {
         try {
             actual = controller.processRequest("FIND_PAGES", parameters);
         } catch (CommandException e) {
-            fail("Exception occurred");
+            fail("Exception occurred", e);
         }
         assertEquals(actual, expected, "fail test");
     }
@@ -204,7 +204,7 @@ public class ControllerTest {
         try {
             actual = controller.processRequest("FIND_PAGES", parameters);
         } catch (CommandException e) {
-            fail("Exception occurred");
+            fail("Exception occurred", e);
         }
         assertEquals(actual, expected, "fail test");
     }
@@ -217,7 +217,7 @@ public class ControllerTest {
         try {
             actual = controller.processRequest("FIND_PUBLICATION_YEAR", parameters);
         } catch (CommandException e) {
-            fail("Exception occurred");
+            fail("Exception occurred", e);
         }
         assertEquals(actual, expected, "fail test");
     }
@@ -230,7 +230,7 @@ public class ControllerTest {
         try {
             actual = controller.processRequest("FIND_PUBLICATION_YEAR", parameters);
         } catch (CommandException e) {
-            fail("Exception occurred");
+            fail("Exception occurred", e);
         }
         assertEquals(actual, expected, "fail test");
     }
@@ -243,7 +243,7 @@ public class ControllerTest {
         try {
             actual = controller.processRequest("FIND_PUBLICATION_YEAR", parameters);
         } catch (CommandException e) {
-            fail("Exception occurred");
+            fail("Exception occurred", e);
         }
         assertEquals(actual, expected, "fail test");
     }
@@ -256,7 +256,7 @@ public class ControllerTest {
         try {
             actual = controller.processRequest("FIND_TITLE", parameters);
         } catch (CommandException e) {
-            fail("Exception occurred");
+            fail("Exception occurred", e);
         }
         assertEquals(actual, expected, "fail test");
     }
@@ -269,7 +269,7 @@ public class ControllerTest {
         try {
             actual = controller.processRequest("FIND_TITLE", parameters);
         } catch (CommandException e) {
-            fail("Exception occurred");
+            fail("Exception occurred", e);
         }
         assertEquals(actual, expected, "fail test");
     }
@@ -282,7 +282,7 @@ public class ControllerTest {
         try {
             actual = controller.processRequest("FIND_TITLE", parameters);
         } catch (CommandException e) {
-            fail("Exception occurred");
+            fail("Exception occurred", e);
         }
         assertEquals(actual, expected, "fail test");
     }
